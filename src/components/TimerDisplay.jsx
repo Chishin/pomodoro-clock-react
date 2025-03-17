@@ -1,4 +1,8 @@
-export default function TimerDisplay({ timeLeft, isBreak, isRunning, selectedDuration }) {
+import { useContext } from 'react';
+import { TimerContext } from '../context/TimerContext';
+
+export default function TimerDisplay() {
+  const { timeLeft, isBreak, isRunning, selectedDuration } = useContext(TimerContext);
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
   const radius = 100;

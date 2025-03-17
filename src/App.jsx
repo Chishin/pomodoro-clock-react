@@ -1,14 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import useSound from 'use-sound';
+import { TimerProvider, TimerContext } from './context/TimerContext';
 import TimerDisplay from './components/TimerDisplay';
 import TimerControls from './components/TimerControls';
 import DurationSelector from './components/DurationSelector';
 
-function App() {
-  const [timeLeft, setTimeLeft] = useState(25 * 60);
-  const [isRunning, setIsRunning] = useState(false);
-  const [selectedDuration, setSelectedDuration] = useState(25);
-  const [isBreak, setIsBreak] = useState(false);
+function AppContent() {
+  const {
+    timeLeft,
+    setTimeLeft,
+    isRunning,
+    setIsRunning,
+    selectedDuration,
+    setSelectedDuration,
+    isBreak,
+    setIsBreak,
+    breakDuration
+  } = useContext(TimerContext);
+  
   const [play] = useSound('/alarm.mp3');
 
   useEffect(() => {
@@ -22,7 +31,7 @@ function App() {
       play();
       if (!isBreak) {
         setIsBreak(true);
-        setTimeLeft(5 * 60); // 5 minute break
+        setTimeLeft(breakDuration * 60);
         setIsRunning(true);
       } else {
         setIsBreak(false);
@@ -56,12 +65,7 @@ function App() {
         <h1 className="text-3xl sm:text-4xl font-bold text-center text-gray-800 mb-6 sm:mb-8">
           {isBreak ? 'Take A Coffee Break Now ☕' : 'Pomodoro Clock'}
         </h1>
-        <TimerDisplay 
-          timeLeft={timeLeft} 
-          isBreak={isBreak}
-          isRunning={isRunning}
-          selectedDuration={isBreak ? 5 : selectedDuration}
-        />
+        <TimerDisplay />
         <div className="w-full flex justify-center">
           <TimerControls 
             isRunning={isRunning}
@@ -86,4 +90,10 @@ function App() {
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <TimerProvider>
+      <AppContent />
+    </TimerProvider>
+  );
+}

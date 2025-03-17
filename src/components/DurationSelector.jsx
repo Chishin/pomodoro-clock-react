@@ -1,5 +1,8 @@
-export default function DurationSelector({ selectedDuration, onDurationChange }) {
-  const durations = [15, 25, 50];
+import { useContext } from 'react';
+import { TimerContext } from '../context/TimerContext';
+
+export default function DurationSelector() {
+  const { selectedDuration, handleDurationChange, durations } = useContext(TimerContext);
 
   return (
     <>
@@ -11,7 +14,7 @@ export default function DurationSelector({ selectedDuration, onDurationChange })
               name="duration"
               value={duration}
               checked={selectedDuration === duration}
-              onChange={() => onDurationChange(duration)}
+              onChange={() => handleDurationChange(duration)}
               className="form-radio h-5 w-5 text-primary focus:ring-primary"
             />
             <span className="text-gray-700 font-medium">{duration} minutes</span>
