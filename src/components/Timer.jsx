@@ -18,15 +18,7 @@ export default function Timer() {
   const [task, setTask] = useState('');
   const [manualMinutes, setManualMinutes] = useState('');
   const [manualSeconds, setManualSeconds] = useState('');
-  const [timerHistory, setTimerHistory] = useState([
-    { 
-      title: 'Untitled Timer', 
-      duration: '00:05', 
-      status: 'Completed (00:05 Spent)', 
-      timestamp: 'Mar 20, 2:59 PM',
-      completed: true
-    }
-  ]);
+  const [timerHistory, setTimerHistory] = useState([]);
 
   // Calculate progress percentage for the progress bar
   const progressPercentage = timeLeft > 0 && selectedDuration > 0
